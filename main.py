@@ -28,7 +28,7 @@ app = FastAPI(title="X4G Gateway", docs_url=None, redoc_url=None)
 CONFIG = {
     "port": int(os.environ.get("PORT", 8000)),
     "secret": os.environ.get("SECRET_KEY", secrets.token_urlsafe(32)),
-    "host": os.environ.get("RAILWAY_PUBLIC_DOMAIN", "localhost"),
+    # Render provides RENDER_EXTERNAL_HOSTNAME automatically; keep Railway\n    # support as a fallback for older deployments.\n    "host": os.environ.get(\n        "PUBLIC_DOMAIN",\n        os.environ.get("RENDER_EXTERNAL_HOSTNAME",\n                       os.environ.get("RAILWAY_PUBLIC_DOMAIN", "localhost"))\n    ),
 }
 
 app.add_middleware(
